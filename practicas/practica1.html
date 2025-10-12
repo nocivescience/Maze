@@ -47,11 +47,14 @@ canvas{
             ctx.beginPath();
             ctx.strokeStyle=randomColor;
             ctx.moveTo(x, y);
-            ctx.lineTo(e.offsetX, e.offsetY);
+            const rect= canvas.getBoundingClientRect();
+            const rectX = e.clientX-rect.left;
+            const rectY = e.clientY-rect.top;
+            ctx.lineTo(rectX, rectY);
             ctx.closePath();
             ctx.stroke();
         }
-        canvas.addEventListener('mousemove', (e)=>{
+        document.addEventListener('mousemove', (e)=>{
             dibujar2(e);
         });
         function fade(){
