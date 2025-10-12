@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+body{
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+}
+canvas{
+    border: black solid 1px;
+    border-radius: 7px;
+    width: 400px;
+    height: 300px;
+}
+</style>
+<body>
+    <canvas width="400" height="300"></canvas>
+    <script>
+        const canvas = document.querySelector('canvas');
+        ctx = canvas.getContext('2d');
+        const color=['blue', 'green', 'yellow', 'red'];
+        function dibujar(){
+            ctx.beginPath();
+            ctx.strokeStyle= 'black'
+            ctx.moveTo(100, 100);
+            ctx.lineTo(120, 120);
+            ctx.stroke();
+            ctx.closePath();
+            ctx.beginPath();
+            ctx.strokeStyle= 'red'
+            ctx.moveTo(200, 160);
+            ctx.lineTo(250, 200);
+            ctx.stroke();
+            ctx.closePath();
+        }
+        dibujar();
+        function dibujar2(e){
+            const x= canvas.width/2;
+            const y= canvas.height/2;
+            const randomColor =color[Math.floor(Math.random()*color.length)];
+            ctx.beginPath();
+            ctx.strokeStyle=randomColor;
+            ctx.moveTo(x, y);
+            ctx.lineTo(e.offsetX, e.offsetY);
+            ctx.closePath();
+            ctx.stroke();
+        }
+        canvas.addEventListener('mousemove', (e)=>{
+            dibujar2(e);
+        });
+        function fade(){
+            ctx.fillStyle= 'rgb(255,255,255, 0.05)';
+            ctx.fillRect(0,0,canvas.width, canvas.height);
+            requestAnimationFrame(fade);
+        };
+        fade();
+    </script>
+</body>
+</html>
