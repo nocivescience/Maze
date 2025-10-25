@@ -9,6 +9,7 @@
 body{
     display: flex;
     height: 100vh;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -18,16 +19,33 @@ canvas{
     width: 400px;
     height: 300px;
 }
+.cuenta{
+    top: 10px;
+    color: black;
+    z-index: 2;
+    width: 200px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 20px;
+    border-radius: 7px;
+    background-color: white;
+}
 </style>
 <body>
+    <div class="cuenta"></div>
     <canvas width="400" height="300"></canvas>
     <script>
+        let cuenta= 0;
+        const cuentaEl = document.querySelector('.cuenta');
         const canvas = document.querySelector('canvas');
         ctx = canvas.getContext('2d');
         const color=['blue', 'green', 'yellow', 'red'];
         function dibujar(){
             ctx.beginPath();
-            ctx.strokeStyle= 'black'
+            ctx.strokeStyle= 'black';
+            ctx.lineWidth=3;
             ctx.moveTo(100, 100);
             ctx.lineTo(120, 120);
             ctx.stroke();
@@ -53,12 +71,20 @@ canvas{
             ctx.lineTo(rectX, rectY);
             ctx.closePath();
             ctx.stroke();
+            document.querySelector('body').style.background= randomColor;
+            cuenta++
         }
         document.addEventListener('mousemove', (e)=>{
             dibujar2(e);
+            cuentaEl.innerHTML=`Conteo: ${cuenta}`
+
         });
+        document.addEventListener('click', ()=>{
+            cuenta=0;
+            cuentaEl.innerHTML=`Cuenta: ${cuenta}`;
+        })
         function fade(){
-            ctx.fillStyle= 'rgb(255,255,255, 0.05)';
+            ctx.fillStyle= 'rgb(0,0,0, 0.05)';
             ctx.fillRect(0,0,canvas.width, canvas.height);
             requestAnimationFrame(fade);
         };
