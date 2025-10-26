@@ -1,11 +1,97 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    .game {
+        background-color: black;
+        border-radius: 7px;
+        box-shadow: 1px 1px 12px black;
+    }
+</style>
+
 <body>
-    
+    <canvas class="game"></canvas>
+    <script>
+        const gameEl = document.querySelector('.game');
+        const ctx = gameEl.getContext('2d');
+        const cols = 10;
+        const rows = 10;
+        const w = 20;
+        gameEl.width = w * 10;
+        gameEl.height = w * 10;
+        class Tablero {
+            constructor() {
+
+            };
+            setup() {
+                for (let i = 0; i < cols; i++) {
+                    const grid = [];
+                    for (let j = 0; j < rows; j++) {
+                        const cell =new Cell(i*w, j*w);
+                        cell.draw();
+                    }
+                }
+            }
+        }
+        class Cell {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.walls = {
+                    top: true,
+                    bottom: true,
+                    left: true,
+                    right: true,
+                };
+                this.visited = true;
+            };
+            draw() {
+                this.drawTop(),
+                    this.drawBottom();
+                this.drawLeft();
+                this.drawRight();
+            };
+            drawTop() {
+                ctx.beginPath();
+                ctx.strokeStyle = 'red';
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x + w, this.y);
+                ctx.closePath();
+                ctx.stroke();
+            };
+            drawBottom() {
+                ctx.beginPath();
+                ctx.strokeStyle = 'red';
+                ctx.moveTo(this.x, this.y + w);
+                ctx.lineTo(this.x + w, this.y + w);
+                ctx.closePath();
+                ctx.stroke();
+            };
+            drawLeft() {
+                ctx.beginPath();
+                ctx.strokeStyle = 'red';
+                ctx.moveTo(this.x, this.y);
+                ctx.lineTo(this.x, this.y + w);
+                ctx.closePath();
+                ctx.stroke();
+            };
+            drawRight() {
+                ctx.beginPath();
+                ctx.strokeStyle = 'red';
+                ctx.moveTo(this.x + w, this.y);
+                ctx.lineTo(this.x + w, this.y + w);
+                ctx.closePath();
+                ctx.stroke();
+            };
+        };
+        const tablero = new Tablero();
+        tablero.setup();
+    </script>
 </body>
+
 </html>
